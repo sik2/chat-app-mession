@@ -5,6 +5,8 @@ import com.ll.chatApp.domain.chat.chatRoom.repository.ChatRoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ChatRoomService {
@@ -18,5 +20,9 @@ public class ChatRoomService {
         chatRoomRepository.save(chatRoom);
 
         return chatRoom;
+    }
+
+    public  List<ChatRoom>  getAll() {
+       return chatRoomRepository.findAll();
     }
 }
