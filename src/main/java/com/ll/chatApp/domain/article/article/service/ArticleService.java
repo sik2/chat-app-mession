@@ -4,16 +4,19 @@ import com.ll.chatApp.domain.article.article.entity.Article;
 import com.ll.chatApp.domain.article.article.repository.ArticleRepository;
 import com.ll.chatApp.domain.member.member.entity.Member;
 import com.ll.chatApp.global.rsData.RsData;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Transactional
 @RequiredArgsConstructor
 @Service
 public class ArticleService {
     private final ArticleRepository articleRepository;
 
+    @Transactional
     public RsData<Article> write(Long memberId, String title, String content) {
         Article article = Article.builder()
                 .author(Member.builder().id(memberId).build())
@@ -28,5 +31,13 @@ public class ArticleService {
 
     public Optional<Article> findById(Long id) {
         return articleRepository.findById(id);
+    }
+
+    @Transactional
+    public void modify(Article article, String title, String content) {
+        article.setTitle(title);
+        article.setContent(content);
+
+        articleRepository.save(article);
     }
 }
