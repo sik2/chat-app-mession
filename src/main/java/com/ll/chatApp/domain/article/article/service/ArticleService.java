@@ -7,6 +7,8 @@ import com.ll.chatApp.global.rsData.RsData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
 @Service
 public class ArticleService {
@@ -22,5 +24,9 @@ public class ArticleService {
         articleRepository.save(article);
 
         return RsData.of("200", "글 작성 성공", article);
+    }
+
+    public Optional<Article> findById(Long id) {
+        return articleRepository.findById(id);
     }
 }
