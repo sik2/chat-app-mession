@@ -1,17 +1,86 @@
-게시물 리스트
-<h1>itemsPage.content</h1>
-[[${itemsPage.content}]]
-<h1>itemsPage.number</h1>
-[[${itemsPage.number}]]
-<h1>itemsPage.totalPages</h1>
-[[${itemsPage.totalPages}]]
-<h1>itemsPage.totalElements</h1>
-[[${itemsPage.totalElements}]]
-<h1>itemsPage.size</h1>
-[[${itemsPage.size}]]
-<h1>itemsPage.numberOfElements</h1>
-[[${itemsPage.numberOfElements}]]
-<h1>itemsPage.first</h1>
-[[${itemsPage.first}]]
-<h1>itemsPage.last</h1>
-[[${itemsPage.last}]]
+<h1>게시물 목록</h1>
+
+<style>
+    .table-1 {
+        border-collapse: collapse;
+    }
+
+    .table-1 th, .table-1 td {
+        border: 1px solid black;
+        padding: 10px;
+    }
+</style>
+
+<form>
+    <div style="display:flex; gap:10px;">
+        <label><input type="checkbox" name="kwType" value="authorUsername"><span>작성자</span></label>
+        <label><input type="checkbox" name="kwType" value="title" checked><span>제목</span></label>
+        <label><input type="checkbox" name="kwType" value="body" checked><span>내용</span></label>
+        <label><input type="checkbox" name="kwType" value="tagContent"><span>태그</span></label>
+        <label><input type="checkbox" name="kwType" value="commentAuthorUsername"><span>댓글 작성자</span></label>
+        <label><input type="checkbox" name="kwType" value="commentBody"><span>댓글 내용</span></label>
+    </div>
+    <input type="search" name="kw" placeholder="검색어">
+    <input type="submit" value="검색">
+</form>
+
+
+<div>
+    <table class="table-1">
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>createdDate</th>
+            <th>updatedDate</th>
+            <th>title</th>
+            <th>body</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="article : ${itemsPage.content}">
+            <td th:text="${article.id}"></td>
+            <td th:text="${article.createDate}"></td>
+            <td th:text="${article.modifyDate}"></td>
+            <td>
+                <span th:text="${article.title}"></span>
+                <span th:text="${article.tagsStr}"></span>
+            </td>
+            <td th:text="${article.content}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<hr>
+
+<div style="display:flex; gap:10px;">
+    <a th:each="num : ${#numbers.sequence(0, itemsPage.totalPages - 1)}" th:href="|?page=${num}|" th:text="${num}"></a>
+</div>
+
+<hr>
+
+<div>
+    <h1>itemsPage.content</h1>
+    [[${itemsPage.content}]]
+
+    <h1>itemsPage.number</h1>
+    [[${itemsPage.number}]]
+
+    <h1>itemsPage.totalPages</h1>
+    [[${itemsPage.totalPages}]]
+
+    <h1>itemsPage.totalElements</h1>
+    [[${itemsPage.totalElements}]]
+
+    <h1>itemsPage.size</h1>
+    [[${itemsPage.size}]]
+
+    <h1>itemsPage.numberOfElements</h1>
+    [[${itemsPage.numberOfElements}]]
+
+    <h1>itemsPage.first</h1>
+    [[${itemsPage.first}]]
+
+    <h1>itemsPage.last</h1>
+    [[${itemsPage.last}]]
+</div>
