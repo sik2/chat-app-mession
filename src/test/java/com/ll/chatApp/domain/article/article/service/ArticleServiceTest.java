@@ -3,6 +3,8 @@ package com.ll.chatApp.domain.article.article.service;
 import com.ll.chatApp.domain.article.article.entity.Article;
 import com.ll.chatApp.domain.article.articleComment.entity.ArticleComment;
 import com.ll.chatApp.domain.article.articleComment.service.ArticleCommentService;
+import com.ll.chatApp.domain.article.articleTag.entity.ArticleTag;
+import com.ll.chatApp.domain.article.articleTag.service.ArticleTagService;
 import com.ll.chatApp.domain.member.member.entity.Member;
 import com.ll.chatApp.domain.member.member.service.MemberService;
 import com.ll.chatApp.global.rsData.RsData;
@@ -19,11 +21,14 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-@ActiveProfiles({"test", "dev"})
+@ActiveProfiles("test")
 @Transactional
 public class ArticleServiceTest {
     @Autowired
     private ArticleService articleService;
+
+    @Autowired
+    private ArticleTagService articleTagService;
 
     @Autowired
     private MemberService memberService;
@@ -53,7 +58,7 @@ public class ArticleServiceTest {
         Article article = articleService.findById(1L).get();
         Member author = article.getAuthor();
 
-        assertThat(author.getAuthor()).isEqualTo("user1");
+        assertThat(author.getUsername()).isEqualTo("user1");
     }
     @DisplayName("1번 글의 제목을 수정한다.")
     @Test
@@ -132,20 +137,20 @@ public class ArticleServiceTest {
 
         assertThat(articleComments.size()).isGreaterThan(0);
     }
-//
-//    @DisplayName("1번 회원이 작성한 태그들")
-//    @Test
-//    void t12() {
-//        List<ArticleTag> articleTags = articleTagService.findByAuthorId(1L);
-//
-//        assertThat(articleTags.size()).isGreaterThan(0);
-//    }
-//
-//    @DisplayName("아이디가 user1 인 회원이 작성한 태그들")
-//    @Test
-//    void t13() {
-//        List<ArticleTag> articleTags = articleTagService.findByAuthorUsername("user1");
-//
-//        assertThat(articleTags.size()).isGreaterThan(0);
-//    }
+
+    @DisplayName("1번 회원이 작성한 태그들")
+    @Test
+    void t12() {
+        List<ArticleTag> articleTags = articleTagService.findByAuthorId(1L);
+
+        assertThat(articleTags.size()).isGreaterThan(0);
+    }
+
+    @DisplayName("아이디가 user1 인 회원이 작성한 태그들")
+    @Test
+    void t13() {
+        List<ArticleTag> articleTags = articleTagService.findByAuthorUsername("user1");
+
+        assertThat(articleTags.size()).isGreaterThan(0);
+    }
 }
