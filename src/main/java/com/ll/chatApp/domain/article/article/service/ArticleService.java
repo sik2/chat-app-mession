@@ -55,27 +55,6 @@ public class ArticleService {
     }
 
     public Page<Article> search(List<String> kwTypes, String kw, Pageable pageable) {
-        if (
-                kwTypes.contains("authorUsername") &&
-                        kwTypes.contains("title") &&
-                        kwTypes.contains("content") &&
-                        kwTypes.contains("tagContent") &&
-                        kwTypes.contains("commentAuthorUsername") &&
-                        kwTypes.contains("commentBody")
-        ) {
-            return articleRepository.findByAuthor_usernameContainingOrTitleContainingOrContentContainingOrTags_contentOrComments_author_usernameContainingOrComments_bodyContaining(kw, kw, kw, kw, kw, kw, pageable);
-        } else if (kwTypes.contains("authorUsername") && kwTypes.contains("title") && kwTypes.contains("content")) {
-            return articleRepository.findByAuthor_usernameContainingOrTitleContainingOrContentContaining(kw, kw, kw, pageable);
-        } else if (kwTypes.contains("title") && kwTypes.contains("content")) {
-            return articleRepository.findByTitleContainingOrContentContaining(kw, kw, pageable);
-        } else if (kwTypes.contains("title")) {
-            return articleRepository.findByTitleContaining(kw, pageable);
-        } else if (kwTypes.contains("content")) {
-            return articleRepository.findByContentContaining(kw, pageable);
-        } else if (kwTypes.contains("authorUsername")) {
-            return articleRepository.findByAuthor_usernameContaining(kw, pageable);
-        }
-
         return articleRepository.findAll(pageable);
     }
 
