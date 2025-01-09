@@ -13,6 +13,7 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static jakarta.persistence.CascadeType.ALL;
 
@@ -63,5 +64,20 @@ public class Article extends BaseEntity {
         for (String tagContent : tagContents) {
             addTag(tagContent);
         }
+    }
+
+
+    public String getTagsStr() {
+        String tagsStr = tags
+                .stream()
+                .map(ArticleTag::getContent)
+                .collect(Collectors.joining(" #"));
+
+        if (tagsStr.isBlank()) {
+            return "";
+        }
+
+        return "#" + tagsStr;
+
     }
 }
