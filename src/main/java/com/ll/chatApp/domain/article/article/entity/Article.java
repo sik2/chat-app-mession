@@ -32,6 +32,7 @@ public class Article extends BaseEntity {
 
     @OneToMany(mappedBy = "article", cascade = ALL, orphanRemoval = true) // fetch = FetchType.LAZY
     @Builder.Default
+    @ToString.Exclude
     private List<ArticleComment> comments = new ArrayList<>();
 
     public void addComment(Member memberAuthor, String commentBody) {
@@ -50,6 +51,7 @@ public class Article extends BaseEntity {
 
     @OneToMany(mappedBy = "article", cascade = ALL, orphanRemoval = true)
     @Builder.Default
+    @ToString.Exclude
     private List<ArticleTag> tags = new ArrayList<>();
 
     public void addTag(String tagContent) {
