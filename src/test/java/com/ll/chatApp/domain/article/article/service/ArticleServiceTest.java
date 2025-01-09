@@ -2,12 +2,14 @@ package com.ll.chatApp.domain.article.article.service;
 
 import com.ll.chatApp.domain.article.article.entity.Article;
 import com.ll.chatApp.domain.member.member.entity.Member;
+import com.ll.chatApp.domain.member.member.service.MemberService;
 import com.ll.chatApp.global.rsData.RsData;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,6 +20,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ArticleServiceTest {
     @Autowired
     private ArticleService articleService;
+
+    @Autowired
+    private MemberService memberService;
 
     @DisplayName("글 쓰기")
     @Test
@@ -41,7 +46,7 @@ public class ArticleServiceTest {
         Article article = articleService.findById(1L).get();
         Member author = article.getAuthor();
 
-        assertThat(author.getUsername()).isEqualTo("user1");
+        assertThat(author.getAuthor()).isEqualTo("user1");
     }
     @DisplayName("1번 글의 제목을 수정한다.")
     @Test
@@ -53,6 +58,16 @@ public class ArticleServiceTest {
         Article article_ = articleService.findById(1L).get();
         System.out.println(article);
         assertThat(article_.getTitle()).isEqualTo("수정된 제목");
+    }
+
+    @DisplayName("2번 글에 댓글들을 추가한다.")
+    @Test
+    @Rollback(false)
+    void t5() {
+        Member member1 = memberService.findById(1L).get();
+        Article article2 = articleService.findById(2L).get();
+
+        article2.addComment(member1, "댓글 입니다.");
     }
 
 }
