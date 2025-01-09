@@ -25,10 +25,10 @@ import static jakarta.persistence.CascadeType.ALL;
 public class Article extends BaseEntity {
     private String title;
     private String content;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Member author;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "article", cascade = ALL) // fetch = FetchType.LAZY
+    @OneToMany(mappedBy = "article", cascade = ALL, orphanRemoval = true) // fetch = FetchType.LAZY
     @Builder.Default
     private List<ArticleComment> comments = new ArrayList<>();
 
