@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Transactional(readOnly = true)
@@ -45,5 +46,9 @@ public class ArticleService {
     @Transactional
     public void modifyComment(ArticleComment comment, String commentBody) {
         comment.setBody(commentBody);
+    }
+
+    public List<Article> findAll() {
+        return articleRepository.findAll();
     }
 }
