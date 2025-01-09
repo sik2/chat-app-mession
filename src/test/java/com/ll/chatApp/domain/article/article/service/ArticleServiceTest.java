@@ -1,6 +1,7 @@
 package com.ll.chatApp.domain.article.article.service;
 
 import com.ll.chatApp.domain.article.article.entity.Article;
+import com.ll.chatApp.domain.article.articleComment.entity.ArticleComment;
 import com.ll.chatApp.domain.member.member.entity.Member;
 import com.ll.chatApp.domain.member.member.service.MemberService;
 import com.ll.chatApp.global.rsData.RsData;
@@ -68,6 +69,26 @@ public class ArticleServiceTest {
         Article article2 = articleService.findById(2L).get();
 
         article2.addComment(member1, "댓글 입니다.");
+    }
+
+    @DisplayName("1번 글의 댓글들을 수정한다.")
+    @Test
+    void t6() {
+        Article article = articleService.findById(2L).get();
+
+        article.getComments().forEach(comment -> {
+            articleService.modifyComment(comment, comment.getBody() + "!!");
+        });
+    }
+
+    @DisplayName("1번 글의 댓글 중 마지막 것을 삭제한다.")
+    @Test
+    void t7() {
+        Article article = articleService.findById(2L).get();
+
+        ArticleComment lastComment = article.getComments().getLast();
+
+        article.removeComment(lastComment);
     }
 
 }

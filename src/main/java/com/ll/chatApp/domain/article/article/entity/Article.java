@@ -40,4 +40,8 @@ public class Article extends BaseEntity {
 
         comments.add(comment);
     }
+
+    public void removeComment(ArticleComment articleComment) {
+        comments.remove(articleComment);
+    }
 }
