@@ -13,7 +13,6 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-@ToString(callSuper = true)
 public class Article extends BaseEntity {
     private String title;
     private String content;

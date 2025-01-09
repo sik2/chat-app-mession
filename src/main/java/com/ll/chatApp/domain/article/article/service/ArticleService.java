@@ -4,13 +4,13 @@ import com.ll.chatApp.domain.article.article.entity.Article;
 import com.ll.chatApp.domain.article.article.repository.ArticleRepository;
 import com.ll.chatApp.domain.member.member.entity.Member;
 import com.ll.chatApp.global.rsData.RsData;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
 public class ArticleService {
@@ -38,6 +38,6 @@ public class ArticleService {
         article.setTitle(title);
         article.setContent(content);
 
-        articleRepository.save(article);
+//        articleRepository.save(article);
     }
 }
