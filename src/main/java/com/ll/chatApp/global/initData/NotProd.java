@@ -1,6 +1,7 @@
 package com.ll.chatApp.global.initData;
 
 import com.ll.chatApp.domain.article.article.entity.Article;
+import com.ll.chatApp.domain.article.article.repository.ArticleRepository;
 import com.ll.chatApp.domain.article.article.service.ArticleService;
 import com.ll.chatApp.domain.chat.chatMessage.service.ChatMessageService;
 import com.ll.chatApp.domain.chat.chatRoom.entity.ChatRoom;
@@ -22,7 +23,8 @@ public class NotProd {
             ChatRoomService chatRoomService,
             ChatMessageService chatMessageService,
             MemberService memberService,
-            ArticleService articleService
+            ArticleService articleService,
+            ArticleRepository articleRepository
     ) {
         return args -> {
             ChatRoom chatRoom1 = chatRoomService.create("room1");
@@ -41,6 +43,26 @@ public class NotProd {
 
             Article article3 = articleService.write(member2.getId(), "제목3", "내용3").getData();
             Article article4 = articleService.write(member2.getId(), "제목4", "내용4").getData();
+
+            article1.addComment(member1, "댓글1");
+            article1.addComment(member1, "댓글2");
+
+            article2.addComment(member1, "댓글3");
+            article2.addComment(member1, "댓글4");
+            article2.addComment(member1, "댓글5");
+
+            article3.addComment(member1, "댓글5");
+            article3.addComment(member1, "댓글6");
+            article3.addComment(member1, "댓글7");
+            article3.addComment(member1, "댓글8");
+            article3.addComment(member1, "댓글9");
+            article3.addComment(member1, "댓글10");
+            article3.addComment(member1, "댓글11");
+            article3.addComment(member1, "댓글12");
+
+            articleRepository.save(article1);
+            articleRepository.save(article2);
+            articleRepository.save(article3);
         };
     }
 }
