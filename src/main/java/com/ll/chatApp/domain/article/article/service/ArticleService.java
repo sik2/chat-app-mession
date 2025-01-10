@@ -39,8 +39,6 @@ public class ArticleService {
     public void modify(Article article, String title, String content) {
         article.setTitle(title);
         article.setContent(content);
-
-//        articleRepository.save(article);
     }
 
     @Transactional
@@ -50,5 +48,9 @@ public class ArticleService {
 
     public List<Article> findAll() {
         return articleRepository.findAll();
+    }
+
+    public void delete(Long id) {
+        this.articleRepository.deleteById(id);
     }
 }
