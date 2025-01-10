@@ -1,6 +1,7 @@
 package com.ll.chatApp.domain.article.article.controller;
 
 import com.ll.chatApp.domain.article.article.dto.ArticleDto;
+import com.ll.chatApp.domain.article.article.dto.ArticleWriteRequest;
 import com.ll.chatApp.domain.article.article.entity.Article;
 import com.ll.chatApp.domain.article.article.service.ArticleService;
 import com.ll.chatApp.global.rsData.RsData;
@@ -34,8 +35,14 @@ public class ApiV1ArticleController {
     }
 
     @PostMapping
-    public RsData writeArticle(@RequestBody Article article) {
-        return articleService.write(article.getAuthor().getId(), article.getTitle(), article.getContent());
+    public RsData writeArticle(@RequestBody ArticleWriteRequest articleWriteRequest) {
+        Article article = articleService.write(articleWriteRequest.getTitle(), articleWriteRequest.getContent());
+
+        return RsData.of(
+                "200",
+                "게시글이 작성에 성공하였습니다.",
+                new ArticleDto(article)
+        );
     }
 
     @PatchMapping({"/{id}"})

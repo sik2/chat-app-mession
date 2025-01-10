@@ -41,11 +41,11 @@ public class NotProd {
                 Member member2 = memberService.join("user2", "1234").getData();
                 Member member3 = memberService.join("user3", "1234").getData();
 
-                Article article1 = articleService.write(member1.getId(), "제목1", "내용1").getData();
-                Article article2 = articleService.write(member1.getId(), "제목2", "내용2").getData();
+                Article article1 = articleService.write("제목1", "내용1");
+                Article article2 = articleService.write("제목2", "내용2");
 
-                Article article3 = articleService.write(member2.getId(), "제목3", "내용3").getData();
-                Article article4 = articleService.write(member2.getId(), "제목4", "내용4").getData();
+                Article article3 = articleService.write("제목3", "내용3");
+                Article article4 = articleService.write("제목4", "내용4");
 
                 article1.addComment(member1, "댓글1");
                 article1.addComment(member1, "댓글2");
