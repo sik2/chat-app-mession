@@ -34,6 +34,9 @@ public class MemberService {
                 .password(passwordEncoder.encode(password))
                 .build();
 
+        String refreshToken = jwtProvider.genRefreshToken(member);
+        member.setRefreshToken(refreshToken);
+
         return memberRepository.save(member);
     }
 
