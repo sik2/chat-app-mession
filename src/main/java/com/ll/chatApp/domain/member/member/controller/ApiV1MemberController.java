@@ -37,7 +37,12 @@ public class ApiV1MemberController {
         String token = jwtProvider.genAccessToken(member);
 
         // 응답 데이터에 accessToken 이름으로 토큰을 발급
-        response.addCookie(new Cookie("accessToken", token));
+        Cookie cookie = new Cookie("accessToken", token);
+            cookie.setHttpOnly(true);
+            cookie.setSecure(true);
+            cookie.setPath("/");
+            cookie.setMaxAge(60 * 60);
+        response.addCookie(cookie);
 
         return new RsData<>("200", "로그인에 성공하였습니다.");
     }
