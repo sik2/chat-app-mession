@@ -19,6 +19,9 @@ public class JwtProvider {
     @Value("${custom.jwt.secretKey}")
     private String secretKeyOrigin;
 
+    @Value("${custom.accessToken.expirationSeconds}")
+    private int accessTokenExpirationSeconds;
+
     private SecretKey cachedSecretKey;
 
     public SecretKey getSecretKey() {
@@ -34,13 +37,11 @@ public class JwtProvider {
     }
 
     public String genAccessToken(Member member) {
-        genToken(member, 60 * 10);
-        return "";
+        return genToken(member, accessTokenExpirationSeconds);
     }
 
     public String genRefreshToken(Member member) {
-        genToken(member, 60 * 60 * 24 * 365 * 1);
-        return "";
+       return genToken(member, 60 * 60 * 24 * 365 * 1);
     }
 
     public String genToken(Member member, int seconds) {
