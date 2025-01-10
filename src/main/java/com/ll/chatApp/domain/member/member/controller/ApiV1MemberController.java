@@ -7,10 +7,13 @@ import com.ll.chatApp.domain.member.member.service.MemberService;
 import com.ll.chatApp.global.jwt.JwtProvider;
 import com.ll.chatApp.global.rsData.RsData;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/members")
@@ -45,7 +48,21 @@ public class ApiV1MemberController {
     }
 
     @GetMapping("/me")
-    public void me() {
-        System.out.println("me");
+    public RsData<MemberDto> me(HttpServletRequest request) {
+       Cookie[] cookies = request.getCookies();
+       String accessToken = "";
+
+       for (Cookie cookie : cookies) {
+           if (cookie.getName().equals("accessToken")) {
+               accessToken = cookie.getValue();
+           }
+       }
+
+       Map<String, Object> claims = jwtProvider.getClaims(accessToken);
+        String username = (String) claims.get("username");
+
+        Member member = this.memberService.getMember(username);
+
+        return new RsData("200", "회원정보 조회 성공", new MemberDto(member));
     }
 }
