@@ -35,7 +35,7 @@ public class ApiV1ArticleController {
     }
 
     @PostMapping
-    public RsData writeArticle(@RequestBody ArticleWriteRequest articleWriteRequest) {
+    public RsData<ArticleDto>  writeArticle(@RequestBody ArticleWriteRequest articleWriteRequest) {
         Article article = articleService.write(articleWriteRequest.getTitle(), articleWriteRequest.getContent());
 
         return RsData.of(
@@ -46,12 +46,24 @@ public class ApiV1ArticleController {
     }
 
     @PatchMapping({"/{id}"})
-    public void updateArticle(@PathVariable("id") Long id, @RequestBody Article article) {
-            this.articleService.modify(article, article.getTitle(), article.getContent());
+    public RsData<ArticleDto> updateArticle(@PathVariable("id") Long id, @RequestBody Article article) {
+            Article modifiedArticle = this.articleService.modify(article, article.getTitle(), article.getContent());
+
+            return RsData.of(
+                    "200",
+                    "게시글이 수정에 성공하였습니다.",
+                    new ArticleDto(modifiedArticle)
+            );
     }
 
     @DeleteMapping({"/{id}"})
-    public void deleteArticle(@PathVariable("id") Long id) {
+    public RsData<Void> deleteArticle(@PathVariable("id") Long id) {
             this.articleService.delete(id);
+
+            return RsData.of(
+                    "200",
+                    "게시글이 삭제에 성공하였습니다.",
+                    null
+            );
     }
 }
