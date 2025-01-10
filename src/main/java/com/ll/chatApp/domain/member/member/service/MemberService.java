@@ -15,14 +15,18 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
 
     public Member join(String username, String password) {
+        Member CheckedSignUpMember = memberRepository.findByUsername(username);
+
+        if (CheckedSignUpMember != null) {
+            throw new IllegalArgumentException("이미 존재하는 회원입니다.");
+        }
+
         Member member = Member.builder()
                 .username(username)
                 .password(passwordEncoder.encode(password))
                 .build();
 
-         memberRepository.save(member);
-
-        return member;
+        return memberRepository.save(member);
     }
 
     public Optional<Member> findById(Long id) {

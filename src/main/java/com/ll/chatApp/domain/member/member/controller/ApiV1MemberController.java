@@ -1,5 +1,6 @@
 package com.ll.chatApp.domain.member.member.controller;
 
+import com.ll.chatApp.domain.member.member.dto.MemberDto;
 import com.ll.chatApp.domain.member.member.dto.MemberRequest;
 import com.ll.chatApp.domain.member.member.entity.Member;
 import com.ll.chatApp.domain.member.member.service.MemberService;
@@ -14,10 +15,10 @@ import org.springframework.web.bind.annotation.*;
 public class ApiV1MemberController {
     private final MemberService memberService;
     @PostMapping("/signup")
-    public RsData<String> signup(@Valid @RequestBody MemberRequest memberRequest) {
+    public RsData<MemberDto> signup(@Valid @RequestBody MemberRequest memberRequest) {
         Member member = memberService.join(memberRequest.getUsername(), memberRequest.getPassword());
 
-        return RsData.of("200", "회원가입에 성공하였습니다.", member.getUsername());
+        return RsData.of("200", "회원가입에 성공하였습니다.", new MemberDto(member));
     }
 
     @PostMapping("/login")
