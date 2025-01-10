@@ -1,5 +1,6 @@
 package com.ll.chatApp.domain.article.article.controller;
 
+import com.ll.chatApp.domain.article.article.dto.ArticleDto;
 import com.ll.chatApp.domain.article.article.entity.Article;
 import com.ll.chatApp.domain.article.article.service.ArticleService;
 import com.ll.chatApp.global.rsData.RsData;
@@ -15,13 +16,21 @@ public class ApiV1ArticleController {
     private final ArticleService articleService;
 
     @GetMapping
-    public List<Article> getArticles() {
-        return articleService.findAll();
+    public List<ArticleDto> getArticles() {
+        List<Article> articles = articleService.findAll();
+
+        List<ArticleDto> articleDtoList = articles.stream()
+                .map(ArticleDto::new)
+                .toList();
+
+        return articleDtoList;
     }
 
     @GetMapping({"/{id}"})
-    private Article getArticle(@PathVariable("id") Long id) {
-        return articleService.findById(id).get();
+    private ArticleDto getArticle(@PathVariable("id") Long id) {
+        Article article = articleService.findById(id).orElseGet(Article::new);
+
+        return new ArticleDto(article);
     }
 
     @PostMapping

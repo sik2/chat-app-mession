@@ -29,7 +29,6 @@ public class Article extends BaseEntity {
     private String title;
     private String content;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     private Member author;
 
